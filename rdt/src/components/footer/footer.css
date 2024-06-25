@@ -1,0 +1,61 @@
+#footerBox {
+    background-color: white;
+    box-shadow: 0 0 20px black;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 3;
+  }
+  
+
+#subredditList {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items:start;
+    width: 95%;
+}
+
+.subredditLogo {
+    width: 50px;
+    background-color: hsl(16,100%, 50.5%);
+}
+
+.changeSub{
+    width: 2rem;
+    height: 2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+
+}
+
+.changeSub:hover{
+    background-color: rgb(245,245,245);
+}
+
+.sub{
+    margin-bottom: 1rem;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    top: 0;
+}
+
+.sub :hover {
+    cursor: pointer;
+}
+
+h2{
+    margin: 1rem 0;
+}
+
+#footerHeading {
+    padding-bottom: 0.1rem;
+    transition: all 0.5s;
+}
+
+#footerHeading :hover{
+    padding-bottom: 1rem;
+    transition: all 0.5s;
+    cursor: pointer;
+}

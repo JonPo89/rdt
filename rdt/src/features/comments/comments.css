@@ -1,0 +1,46 @@
+.comments {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+
+.commentCount {
+    display: inline-flex;
+    border-radius: 5px;
+    padding: 0.2rem;
+    transition: all 0.5s;
+}
+
+.commentCount:hover{
+    cursor: pointer;
+    background-color: rgb(245, 245, 245);
+}
+
+.commentLogo{
+    width: 1.5rem;
+    height: 1.5rem;
+    padding-right: 0.5rem;
+}
+
+.commentsList {
+    padding-top: 1rem;
+    transition: all 2s;
+}
+
+.comment {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+}
+
+.commentAuthor {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.commentBody {
+    text-align: left;
+}

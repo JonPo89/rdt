@@ -1,0 +1,36 @@
+.search{
+    display: inline-flex;
+    align-items: center;
+}
+
+#searchBar{
+    border: 0;
+    background-color: rgb(235, 235, 235);
+    height: 2rem;
+    margin: 0 0.5rem;
+    padding: 0 1rem;
+    border-radius: 5px;
+
+}
+
+.searchButton{
+    height: 1.3rem;
+    width: 1.3rem;
+    padding: 0.35rem;
+    border: 0;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: background-color 0.5s;
+
+}
+
+.searchButton:hover{
+    background-color: rgb(245, 245, 245);
+    transition: background-color 0.5s;
+}
+
+.searchButton:active{
+    height: 1.15rem;
+    width: 1.15rem;
+    padding: 0.425rem;
+}
