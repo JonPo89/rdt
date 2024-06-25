@@ -38,7 +38,7 @@ export function Comments( {id} ) {
     useEffect(() => {
         setToggleComments(false);
         dispatch(clearComments());
-    }, [post])
+    }, [post, dispatch])
 
     const handleClick = () => {
         setToggleComments(!toggleComments);

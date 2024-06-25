@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { aestheticsColor } from '../../features/aesthetics/aestheticsSlice';
 import { Post } from '../../features/posts/Post';
 import { selectPosts, loadPostsBySubreddit } from '../../features/posts/postSlice';
