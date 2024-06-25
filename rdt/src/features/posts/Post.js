@@ -102,7 +102,13 @@ export function Post( {id} ) {
                     </div>
                     <div ref = {contentRef} className = {`content ${minimise && canMinimise ? 'overlay' : ''}`} style={{maxHeight:postHeight}} onClick={minimiseContent} >
                         {post.image ? 
-                            <img className="postImage" src={post.image} alt={`${post.title} image`}  onLoad={() => setImageLoaded(true)} />
+                            <img 
+                                className="postImage" 
+                                src={post.image} 
+                                alt={`${post.title} image`}  
+                                onLoad={() => setImageLoaded(true)}  
+                                // eslint-disable-next-line jsx-a11y/alt-text
+                            />
                         :
                             <p className="postText">{post.selfText}</p>
                         }
