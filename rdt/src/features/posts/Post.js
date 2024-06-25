@@ -105,9 +105,8 @@ export function Post( {id} ) {
                             <img 
                                 className="postImage" 
                                 src={post.image} 
-                                alt={`${post.title} image`}  
+                                alt={`Post ${post.title}`}  
                                 onLoad={() => setImageLoaded(true)}  
-                                // eslint-disable-next-line jsx-a11y/alt-text
                             />
                         :
                             <p className="postText">{post.selfText}</p>
