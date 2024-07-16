@@ -14,6 +14,7 @@ export function Search() {
 
     const handleChange = (e) => {
         setSearch(e.target.value);
+        
     }
 
     const onSubmit = (e) => {

@@ -33,7 +33,7 @@ export function Header() {
             <div 
                 className="logo" 
                 id="JP"
-                style={{backgroundColor:logoColor}}
+                style={{backgroundColor:"white"}}
                 onClick={changeAestheticsColor} 
             >
 

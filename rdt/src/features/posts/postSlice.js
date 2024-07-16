@@ -11,15 +11,16 @@ export const loadPostsBySubreddit = createAsyncThunk(
                 return json.data.children.map(post => (
                     {
                         id: post.data.id,
-                        type: post.kind,
+                        type: post.data.domain,
                         author: post.data.author,
                         title: post.data.title,
                         subreddit: post.data.subreddit,
                         image: post.data.url_overridden_by_dest,
-                        selfText: post.data.selftext,
+                        selfText: post.data.selftext_html,
                         upvotes: post.data.ups,
+                        video: post.data.media  ,
                         comments: [],
-                        commentCount: post.data.num_comments,
+                        commentCount: post.data.num_comments -1,
                         commentShow: false
                     }
 

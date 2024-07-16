@@ -49,7 +49,7 @@ export function Comments( {id} ) {
             case 'loaded':
                 return (
                     <div className="commentsList">
-                    {comments ? Object.values(comments).slice(0,10).map(comment => (
+                    {comments ? Object.values(comments).slice(1,11).map(comment => (
                         <div className="comment" key={comment.id}>
                             <h4 className="commentAuthor" style={{color:upColour}}>u/{comment.author}</h4>
                             <p className="commentBody">{comment.comment}</p>
@@ -76,7 +76,7 @@ export function Comments( {id} ) {
                     <FaRegCommentAlt className="commentLogo" />
                     <h4 className="postPrimary" style={{color:colour}}>{post.commentCount}</h4>
                 </div>
-                <h4 className="postSecondary" style={{color: upColour}}>{`r/${post.subreddit}`}</h4>    
+                   
             </div>
             
             {content()}

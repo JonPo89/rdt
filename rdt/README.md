@@ -19,6 +19,14 @@ Jon Porter
 * 0.1
     * Initial Release
 
+* 1.0 - Significant update
+	* Added screen size reactions
+	* Updated font
+	* Rearranged the post headings to be clearer
+	* Various aesthetic updates
+	* Text posts now adhere to html coding (Can contain links and formatting)
+	* Post videos now work
+
 
 
 ## Acknowledgments

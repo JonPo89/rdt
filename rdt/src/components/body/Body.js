@@ -25,7 +25,7 @@ export function Body() {
     
     return (
         <div id="body" style={{backgroundColor:bgColor}}>
-            {Object.keys(posts).slice(0,10).map(id => (
+            {Object.keys(posts).map(id => (
                 <Post key={id} id={id} />
                 
             ))}
