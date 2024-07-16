@@ -13,6 +13,7 @@ export const loadSubreddits = createAsyncThunk(
                     id: subreddit.data.id,
                     name: subreddit.data.display_name_prefixed,
                     icon: subreddit.data.icon_img,
+                    noPrefix: subreddit.data.display_name
                 }));
             }
         }

@@ -101,19 +101,21 @@ export function Footer() {
                 <h2 style={{ color: color }}>{currentSub}<span style={{ color: downColor }}>.</span></h2>
             </div>
             {subredditToggle ?
-                <div id="subredditList">
+                <div id="footerContent">
                     <FaAngleLeft id="subLeft" className="changeSub" onClick={leftSubs} style={{ color: leftArrowColour }} />
-                    {subreddits.slice(minSubs, (minSubs + windowWidthNo)).map(subreddit => (
-                        <div className="sub" key={subreddit.name} onClick={() => handleSubmit(subreddit)} style={{ left: subredditLocation, opacity: subOpacity}}>
-                            <img
-                                className="subredditLogo"
-                                src={subreddit.icon ? subreddit.icon : redditLogo}
-                                alt={`${subreddit.name} logo`}
-                                
-                            />
-                            <h5 style={{color:subreddit.name === currentSub ? color : "black"}}>{subreddit.name}</h5>
+                        <div id="subredditList">
+                        {subreddits.slice(minSubs, (minSubs + windowWidthNo)).map(subreddit => (
+                            <div className="sub" key={subreddit.name} onClick={() => handleSubmit(subreddit)} style={{ left: subredditLocation, opacity: subOpacity}}>
+                                <img
+                                    className="subredditLogo"
+                                    src={subreddit.icon ? subreddit.icon : redditLogo}
+                                    alt={`${subreddit.name} logo`}
+                                    
+                                />
+                                <h5 style={{color:subreddit.name === currentSub ? color : "black"}}>{subreddit.noPrefix}</h5>
+                            </div>
+                        ))}
                         </div>
-                    ))}
                     <FaAngleRight id="subRight" className="changeSub" onClick={rightSubs} style={{ color: rightArrowColour }} />
                 </div>
                 :
