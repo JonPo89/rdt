@@ -30,14 +30,16 @@ export function Header() {
                 <h2 id="rdtHeading" style={{color:logoColor}}>rdt<span style={{color:downColor}}>.</span></h2>
                 <Search />
             </div>
-            <div 
-                className="logo" 
-                id="JP"
-                style={{backgroundColor:"white"}}
-                onClick={changeAestheticsColor} 
-            >
-
-            </div>
+            <a href="https://jonporterfolio.com" target="_blank" rel="norefferer">
+                <div 
+                    className="logo" 
+                    id="JP"
+                    style={{border: "2px solid " + logoColor}}
+                    onClick={changeAestheticsColor} 
+                >
+                    <h3 style={{color:logoColor}}>Jon Porter</h3>
+                </div>
+            </a>
         </header>
     )
 }

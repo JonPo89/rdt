@@ -3,6 +3,18 @@
   padding: 0;
 }
 
+a{
+  text-decoration: none;
+}
+
+a:visited{
+  text-decoration: none;
+}
+
+a:active{
+  text-decoration: none;
+}
+
 header {
   display: inline-flex;
   justify-content:space-between;
@@ -22,6 +34,7 @@ header {
   border-radius: 100%;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .logo img {
@@ -37,6 +50,10 @@ header {
 
 #JP {
   background-color: none;
+}
+
+#JP:hover {
+ background-color: #00000009;
 }
 
 .App {
