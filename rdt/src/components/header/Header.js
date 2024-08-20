@@ -30,7 +30,7 @@ export function Header() {
                 <h2 id="rdtHeading" style={{color:logoColor}}>rdt<span style={{color:downColor}}>.</span></h2>
                 <Search />
             </div>
-            <a href="https://jonporterfolio.com" target="_blank" rel="norefferer">
+            <a href="https://jonporterfolio.com" target="_blank" rel="noreferrer">
                 <div 
                     className="logo" 
                     id="JP"
