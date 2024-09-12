@@ -120,7 +120,7 @@ export function Post( {id} ) {
                                 className="postVideo"
                                 controls
                                 src={post.video.reddit_video.fallback_url.replace('?source=fallback','')}
-
+                                style={{height: '500px'}}
                                 alt={`Post ${post.title}`}
                                 onLoad={() => setImageLoaded(true)}
                             />
