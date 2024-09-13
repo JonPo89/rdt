@@ -27,7 +27,7 @@ export function Post( {id} ) {
     const downVoteColor = downvoted ? downColour : "rgb(245, 245, 245)";
     const upVoteColor = upvoted? upColour : "rgb(245, 245, 245)";
 
-    const postHeight = minimise ? "200px" : "1000px";
+    const postHeight = minimise ? "200px" : "80vh";
 
     useEffect(() => {
         setMinimise(true);
@@ -120,7 +120,6 @@ export function Post( {id} ) {
                                 className="postVideo"
                                 controls
                                 src={post.video.reddit_video.fallback_url.replace('?source=fallback','')}
-                                style={{height: '500px'}}
                                 alt={`Post ${post.title}`}
                                 onLoad={() => setImageLoaded(true)}
                             />
