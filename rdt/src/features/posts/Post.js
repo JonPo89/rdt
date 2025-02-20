@@ -39,7 +39,7 @@ export function Post( {id} ) {
             document.removeEventListener("keydown", handleKeyPress);
         }
     
-    },[activePost, id, posts, dispatch, changePostClick, post.id])
+    },[activePost, id, posts, dispatch, post.id])
 
 
     const parsedSelfText = typeof post.selfText === 'string' ? parse(post.selfText.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")) : null;
