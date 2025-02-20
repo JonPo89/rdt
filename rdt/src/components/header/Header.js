@@ -1,45 +1,42 @@
 import React from 'react';
-import { Search } from '../../features/search/Search';
-import { changeColour, aestheticsColor, aestheticsDownColor } from '../../features/aesthetics/aestheticsSlice';
+import { nextSubreddit, selectCurrentSubreddit } from '../../features/subreddit/subredditSlice';
+import { aestheticsColor } from '../../features/aesthetics/aestheticsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import redditLogo from '../0img/redditlogo.png';
+import { useState, useEffect } from 'react';
+import { setLimit } from '../../features/posts/postSlice';
 
 export function Header() {
     const dispatch = useDispatch();
+    const currentSub = useSelector(selectCurrentSubreddit)
+    const [subVisibility, setSubVisibility] = useState(false);
     
     let logoColor = useSelector(aestheticsColor);
-    let downColor = useSelector(aestheticsDownColor);
     
-    const changeAestheticsColor = () => {
-        dispatch(changeColour());
-        
+    const nextSubredditClick = () => {
+        dispatch(setLimit(25));
+        dispatch(nextSubreddit())
+        setSubVisibility(true);
     };
 
+    useEffect(() => {
+        if (subVisibility) {
+            const timer = setTimeout(() => setSubVisibility(false), 2000);
+            return () => clearTimeout(timer); 
+        }
+    }, [subVisibility])
     
     return (
         <header className="AppHeader">
             <div 
                 className="logo" 
                 id="redditLogo" 
-                onClick={changeAestheticsColor} 
+                onClick={nextSubredditClick} 
                 style={{backgroundColor:logoColor}}
             >
                 <img src={redditLogo} alt="reddit logo" />
             </div>
-            <div>
-                <h2 id="rdtHeading" style={{color:logoColor}}>rdt<span style={{color:downColor}}>.</span></h2>
-                <Search />
-            </div>
-            <a href="https://jonporterfolio.com" target="_blank" rel="noreferrer">
-                <div 
-                    className="logo" 
-                    id="JP"
-                    style={{border: "2px solid " + logoColor}}
-                    onClick={changeAestheticsColor} 
-                >
-                    <h3 style={{color:logoColor}}>Jon Porter</h3>
-                </div>
-            </a>
+            <h1 id='currentSub' style={{color: subVisibility? logoColor :'transparent', left: subVisibility? '2rem':'0rem', }}>{currentSub}</h1>
         </header>
     )
 }

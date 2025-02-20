@@ -3,9 +3,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const apiRoot = 'https://www.reddit.com'
 export const loadPostsBySubreddit = createAsyncThunk(
     "posts/loadPostsBySubreddit",
-    async (subreddit) => {
+    async ({subreddit, limit}) => {
         try{
-            const response = await fetch(`${apiRoot}/${subreddit}.json`);
+            const response = await fetch(`${apiRoot}/${subreddit}.json?limit=${limit}`);
             if (response.ok) {
                 const json = await response.json();
                 return json.data.children.map(post => (
@@ -18,7 +18,9 @@ export const loadPostsBySubreddit = createAsyncThunk(
                         image: post.data.url_overridden_by_dest,
                         selfText: post.data.selftext_html,
                         upvotes: post.data.ups,
-                        video: post.data.media  ,
+                        video: post.data.media,
+                        url: post.data.url_overridden_by_dest,
+                        thumbnail: post.data.thumbnail,
                         comments: [],
                         commentCount: post.data.num_comments -1,
                         commentShow: false
@@ -39,13 +41,21 @@ const postSlice = createSlice({
         posts: [],
         isLoading: false,
         hasError: false,
-        search: []
+        search: [],
+        activePost: 0,
+        limit: 25
     },
     reducers: {
         searchFor: {
             reducer: (state, action) => {
                 state.posts = state.posts.filter(post => post.title.toLowerCase().includes(action.payload.toLowerCase()));
             }
+        },
+        setActivePost: (state, action) => {
+            state.activePost = action.payload;
+        },
+        setLimit: (state, action) => {
+            state.limit = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -67,8 +77,10 @@ const postSlice = createSlice({
 
 })
 
-export const {searchFor} = postSlice.actions;
+export const {searchFor, setActivePost, setLimit} = postSlice.actions;
 export const selectPosts = (state) => state.posts.posts;
 export const selectPostById = (id) => (state) => state.posts.posts[id];
+export const selectActivePost = (state) => state.posts.activePost;
 export const selectIsPostLoading = (state) => state.posts.isLoading;
+export const selectLimit = (state) => state.posts.limit;
 export default postSlice.reducer;

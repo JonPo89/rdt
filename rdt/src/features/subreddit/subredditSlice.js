@@ -6,7 +6,7 @@ export const loadSubreddits = createAsyncThunk(
     'subreddit/loadSubreddits',
     async () => {
         try{
-            const response = await fetch(`${apiRoot}/subreddits/popular.json`);
+            const response = await fetch(`${apiRoot}/subreddits/default.json`);
             if (response.ok) {
                 const json = await response.json();
                 return json.data.children.map(subreddit => ({
@@ -29,13 +29,22 @@ const subredditSlice = createSlice({
     name: 'subreddit',
     initialState: {
         subreddits: [],
-        currentSubreddit: 'r/funny',
+        currentSubreddit: 'r/popular',
+        subNo: null,
         isLoading: false,
         hasError: false
     },
     reducers: {
         changeSubreddit: (state, action) => {
             state.currentSubreddit = action.payload;
+        },
+        nextSubreddit: (state) => {
+            if (state.subNo < (state.subreddits.length-1)){
+                state.subNo ++;
+            } else {
+                state.subNo = 0;
+            }
+            state.currentSubreddit = state.subreddits[state.subNo].name
         }
     },
     extraReducers: (builder) => {
@@ -59,5 +68,5 @@ const subredditSlice = createSlice({
 
 export const selectSubreddits = (state) => state.subreddit.subreddits;
 export const selectCurrentSubreddit = (state) => state.subreddit.currentSubreddit;
-export const { changeSubreddit } = subredditSlice.actions;
+export const { changeSubreddit, nextSubreddit } = subredditSlice.actions;
 export default subredditSlice.reducer;

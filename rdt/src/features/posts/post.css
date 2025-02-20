@@ -1,135 +1,103 @@
 .post{
     background-color: white;
     position: relative;
-    width: 99%;
-    margin: 10px 0 0 0;
+    flex: 1;
+    min-width: 15rem;
+    max-width: 25rem;
+    height: 15rem;
     z-index: 2;
     overflow: hidden;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     display: inline-flex;
     border-radius: 5px;
     transition: all 0.5s;
-  }
-
-.postBox{
-    width:100%;
-    padding: 2rem;
+    cursor: pointer;
+    margin: 0.1rem;
     display: inline-flex;
-}
-
-.votes {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    width: 3rem;    
 }
 
-.votes h3 {
-    padding-bottom: 0.5rem;
-}
-
-.mainContent {
-    width: 100%;
-    display: inline-flex;
-    flex-direction: column;
-    padding-left: 1rem;
-    align-items: baseline;
-    justify-content: space-between;
+.post.active {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    min-width: 98vw;
+    height: 98vh;
+    z-index: 10;
 }
 
 .postImage {
-    max-width: 100%;
-    max-height: 80vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+.postImage.active {
     object-fit: contain;
 }
 
 .postVideo {
-    max-width: 100%;
-    min-height: 500px;
-    max-height: 80vh;
+    height:100%;
+    
     object-fit: contain;
+}
+
+.postVideo.active{
+    height: 90%;
 }
 
 .content {
     overflow: hidden;
-    transition: all 1s;
     position: relative;
-    z-index: 2;
-}
-
-.content:hover{
-    cursor: pointer;
-}
-
-.overlay{
-    position: relative;
-}
-
-.overlay::before {
-    content: "";
-    background: linear-gradient(0deg, rgba(255,255,255,1) 5%, rgba(249,166,5,0) 50%);
-    display: inline-flex;
-    align-items: end;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    width: 100%;
     height: 100%;
-}
-
-.overlay:hover{
-    content: "expand";
-}
-
-.postHeading {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: space-between;
     width: 100%;
-    margin-bottom: 1rem;
-}
-
-.postSecondary {
+    z-index: 2;
+    object-position: 50% 50%;
     display: inline-flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.vote {
-    background-color: rgb(245, 245, 245);
-    color: black;
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    display: inline-flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex-direction: column;
 }
 
-.vote:hover {
-    cursor: pointer;
+.content.active{
+    justify-content: center;
 }
 
-.voteCount {
-    margin: 1rem 0;
+.arrow {
+    width: 3rem;
+    height: 3rem;
+    margin: 100vh 3rem;
+    color: black;
+    transition: color 0.5s;
 }
 
-h4{
-    text-align: left;
+.arrow:hover{
+    color: grey;
+}
+
+.post h4{
+    margin: .5rem;
 }
 
 .postText{
     text-align: left;
+    padding: 1rem;
+    max-height: 90vh;
+    max-width: 90%;
 }
 
-@media only screen and (max-width: 400px) {
-    .postSecondary {
-        flex-direction: column;
-        align-items: end;
-    }
+.postText.active{
+    overflow-y: auto;
+    max-width: 60vw;
+}
 
+@media only screen and (max-width: 520px) {
+    .arrow {
+        width: 3rem;
+        height: 3rem;
+        margin: 100vh 0rem;
+        color: black;
+        transition: color 0.5s;
+    }
 
 }

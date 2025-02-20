@@ -7,7 +7,7 @@ const aestheticsSlice = createSlice({
         downColor: "hsl(196,100%,50.5%)"
     },
     reducers: {
-        changeColour: (state, action) => {
+        changeColour: (state) => {
             const randomNum = (Math.random() * 360);
             const flipNum = Math.abs(randomNum - 180);
             state.color = `hsl(${randomNum}, 100%, 50.5%)`;

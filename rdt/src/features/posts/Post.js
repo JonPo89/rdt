@@ -1,139 +1,140 @@
-import React, { useState, useEffect, useRef} from "react";
-import { selectPostById, selectIsPostLoading } from "./postSlice";
-import { useSelector } from "react-redux";
+import React, { useRef, useEffect} from "react";
+import { selectPostById, setActivePost, selectActivePost, selectPosts } from "./postSlice";
+import { useSelector, useDispatch } from "react-redux";
 import './post.css';
-import { aestheticsColor, aestheticsDownColor } from '../../features/aesthetics/aestheticsSlice';
-import { Comments } from "../comments/Comments";
-import { FaAngleUp, FaAngleDown } from "react-icons/fa";
+import { aestheticsColor } from '../../features/aesthetics/aestheticsSlice';
 import parse from 'html-react-parser';
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 
 export function Post( {id} ) {
+    const dispatch = useDispatch();
     const post = useSelector(selectPostById(id));
     const upColour = useSelector(aestheticsColor);
-    const downColour = useSelector(aestheticsDownColor);
-    const [minimise, setMinimise] = useState(true);
-    const [opacitySet, setOpacitySet] = useState(1);
-    const [locationSet, setLocationSet] = useState(0);
-    const [upvoted, setUpvoted] = useState(false);
-    const [downvoted, setDownvoted] = useState(false);
-    const [ voteColour, setVoteColour ] = useState("black");
-    const [upvoteCount, setUpvoteCount] = useState(0);
-    const [canMinimise, setCanMinimise] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const isLoading = useSelector(selectIsPostLoading);
+    const activePost = useSelector(selectActivePost);
+    const posts= useSelector(selectPosts);
     
     const contentRef = useRef(null);
-
-    const downVoteColor = downvoted ? downColour : "rgb(245, 245, 245)";
-    const upVoteColor = upvoted? upColour : "rgb(245, 245, 245)";
-
-    const postHeight = minimise ? "200px" : "80vh";
-
-    useEffect(() => {
-        setMinimise(true);
-    }, [post.id])
-
-    useEffect(() => {
-        if (isLoading) {
-            setOpacitySet(0);
-            setLocationSet(-1000);
-        } else {
-            setOpacitySet(1);
-            setLocationSet(0);
-        }
-    },[isLoading]);
-
-    useEffect(() => {
-        if (contentRef.current) {
-            setCanMinimise(contentRef.current.scrollHeight > 200);
-        }
-    }, [imageLoaded, post.id])
-
-    const minimiseContent = () => {
-        if (canMinimise){
-            setMinimise(!minimise);
-        
-        }
+    
+    const changePostClick = (no) => {
+        if ((no) < 0 || (no) >= posts.length) return;
+        dispatch(setActivePost(posts[no].id));
     }
 
-    const upvote = () => {
-        if (!upvoted) {
-            setUpvoteCount(1);
-            setVoteColour(upColour);
-        } else {
-            setUpvoteCount(0);
-            setVoteColour("black");
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+            if (activePost !== null && activePost === post.id){
+                if (event.key === "ArrowRight") {
+                    changePostClick(Number(id)+1)
+                } else if (event.key === "ArrowLeft") {
+                    changePostClick(Number(id)-1)
+                } else if (event.key === "Escape") {
+                    dispatch(setActivePost(null))
+                }
+            }
+            
         }
-        setUpvoted(!upvoted);
-        setDownvoted(false);
-        
-    };
-
-    const downvote = () => {
-        if (!downvoted) {
-            setUpvoteCount(-1);
-            setVoteColour(downColour);
-        } else {
-            setUpvoteCount(0);
-            setVoteColour("black");
+        document.addEventListener("keydown", handleKeyPress);
+        return () => {
+            document.removeEventListener("keydown", handleKeyPress);
         }
-        setDownvoted(!downvoted);
-        setUpvoted(false);
-        
-        
-    };  
+    
+    },[activePost, id, posts])
 
-    const parsedSelfText = typeof post.selfText === 'string' ? parse(post.selfText.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#039;/g, "'")) : null;
 
+    const parsedSelfText = typeof post.selfText === 'string' ? parse(post.selfText.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")) : null;
+    
+    
 
     if (!post){
         return null;
     }    
 
     return (
-        <div className="post" style={{opacity:opacitySet, left:locationSet}}>
-            <div className="postBox" key={id}>
-                <div className="votes">
-                    <FaAngleUp className="vote" style={{color:(upvoted?'white':upColour), backgroundColor:upVoteColor, border:`1px solid ${upColour}`}} onClick={upvote}/>
-                    <h4 className="voteCount" style={{color:voteColour}}>{post.upvotes + upvoteCount}</h4>
-                    <FaAngleDown className="vote" style={{color:(downvoted?'white':downColour), backgroundColor:downVoteColor, border:`1px solid ${downColour}`}} onClick={downvote}/>  
+        <div className={`post ${post.id === activePost? "active" : ""}`}  
+            style={{transition: activePost === null ? 'all 0.5s;' : 'all 0s'}}
+        >
+            {post.id === activePost ?
+                <div onClick={()=>changePostClick(Number(id)-1)}>
+                    <IoIosArrowDropleft className="arrow" style={{color:id<1?'white':''}}/>
                 </div>
-                <div className="mainContent" >
-                    <div className="postHeading">
-                        <div className="postSecondary" style={{color: upColour}}>
-                            <h5>u/{post.author}</h5>
-                            <h5>{`r/${post.subreddit}`}</h5> 
+                    :
+                    null
+                
+            }
+            
+            <div ref = {contentRef} 
+                className = {`content ${post.id === activePost? "active" : ""}`} 
+                onClick={()=> dispatch(setActivePost(post.id === activePost? null : post.id))}
+                style={{transition: activePost === null ? 'all 0.5s;' : 'all 0s'}}
+                >
+            {post.id === activePost || (post.type !== 'i.redd.it' && post.type !== 'v.redd.it') ?
+                            <h4 style={{color:upColour}}>{post.title}</h4>
+                        
+                    : null
+                    }
+                
+                {post.image && post.type ==='i.redd.it' ? 
+                    <>
+                    
+                    <img 
+                        className={`postImage ${post.id === activePost? "active" : ""}` }
+                        src={post.image} 
+                        alt={`Post ${post.title}`}  
+                    />
+                    
+                    </>
+                    :
+                    post.video && post.type === 'v.redd.it'?
+                    <>
+                    
+                    <video
+                        className={`postVideo  ${post.id === activePost? "active" : ""}`}
+                        controls
+                        src={post.video.reddit_video.fallback_url.replace('?source=fallback','')}
+                        alt={`Post ${post.title}`}
+                    />
+                    
+                    </>
+                    :
+                    post.selfText ?
+                    <>
+                        
+                        <div className={`postText ${post.id === activePost? "active" : ""}`}>
+                            {parsedSelfText}
+                            
                         </div>
-                        <h4 className="postPrimary">{post.title}</h4>
-                    </div>
-                    <div ref = {contentRef} className = {`content ${minimise && canMinimise ? 'overlay' : ''}`} style={{maxHeight:postHeight}} onClick={minimiseContent} >
-                        {post.image && post.type ==='i.redd.it' ? 
-                            <img 
-                                className="postImage" 
-                                src={post.image} 
-                                alt={`Post ${post.title}`}  
-                                onLoad={() => setImageLoaded(true)}  
-                            />
-                            :
-                            post.image && post.type === 'v.redd.it'?
-                            <video
-                                className="postVideo"
-                                controls
-                                src={post.video.reddit_video.fallback_url.replace('?source=fallback','')}
-                                alt={`Post ${post.title}`}
-                                onLoad={() => setImageLoaded(true)}
-                            />
-                            :
-                            <div className="postText">
-                                {parsedSelfText}
-                            </div>
-                        }
-                    </div>
-                    <Comments id={id}/>
-                </div>
+                            
+                         
+                    </>
+                    :
+                    <>
+                        
+                        <a
+                            href={post.url}
+                            className={`postLink ${post.id === activePost? "active" : ""}` }
+                            target="_blank" 
+                            rel="noreferrer"
+                        >
+                            {post.thumbnail.includes(".jpg"||".png")?
+                                <img src={post.thumbnail} />
+                            :null}
+                            
+                            <FaExternalLinkAlt style={{color:'upColour'}}/>
+                        </a>
+                            
+                        
+                    </>   
+                }
                 
                 
-                
+            </div>
+            <div onClick={()=>changePostClick(Number(id)+1)}>
+            {post.id === activePost ?
+                    <IoIosArrowDropright className="arrow" style={{color:id>(posts.length -2)?'white':''}}/>
+                    :
+                    null
+                }
             </div>
         </div>
     );
