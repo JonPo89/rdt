@@ -19,7 +19,7 @@ export function Post( {id} ) {
     const changePostClick = useCallback((no) => {
         if ((no) < 0 || (no) >= posts.length) return;
         dispatch(setActivePost(posts[no].id));
-    },[activePost, posts, dispatch]);
+    },[posts, dispatch]);
 
     useEffect(() => {
         const handleKeyPress = (event) => {
