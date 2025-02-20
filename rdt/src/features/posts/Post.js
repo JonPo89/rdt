@@ -39,7 +39,7 @@ export function Post( {id} ) {
             document.removeEventListener("keydown", handleKeyPress);
         }
     
-    },[activePost, id, posts])
+    },[activePost, id, posts, dispatch, changePostClick, post.id])
 
 
     const parsedSelfText = typeof post.selfText === 'string' ? parse(post.selfText.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")) : null;
@@ -117,7 +117,7 @@ export function Post( {id} ) {
                             rel="noreferrer"
                         >
                             {post.thumbnail.includes(".jpg"||".png")?
-                                <img src={post.thumbnail} />
+                                <img src={post.thumbnail} alt={`${post.title}`}/>
                             :null}
                             
                             <FaExternalLinkAlt style={{color:'upColour'}}/>
