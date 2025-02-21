@@ -30,10 +30,12 @@
 .postImage {
     width: 100%;
     object-fit: cover;
+    height:100%;
 }
 
 .postImage.active {
     object-fit: contain;
+    height: 90vh;
 }
 
 .postVideo {
@@ -43,7 +45,7 @@
 }
 
 .postVideo.active{
-    height: 90%;
+    height: 90vh;
 }
 
 .content {
